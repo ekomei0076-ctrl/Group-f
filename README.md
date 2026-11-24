@@ -1,3 +1,3 @@
-# Group-f
+# finders
 Comp science Group b
 
