@@ -150,14 +150,14 @@ The primary success metric for the platform is Return Rate, which measures the p
 
 Supporting metrics include:
 
-- Average reporting time under 60 seconds.
-- Reduction in front-desk inquiries.
-- Median resolution time from report to return.
-- Claim approval turnaround time.
-- User satisfaction scores for both seekers and staff.
+ Average reporting time under 60 seconds.
+ Reduction in front-desk inquiries.
+ Median resolution time from report to return.
+ Claim approval turnaround time.
+ User satisfaction scores for both seekers and staff.
 
 Future versions of the platform may introduce native mobile applications, AI-powered visual search, multilingual support, smart storage locker integrations, and a broader community network that allows organizations to share found-item data across multiple locations.
 
-Ultimately, the success of the platform will be determined by one outcome: making the process of losing something less stressful and dramatically increasing the chances of getting it back.
+ the success of the platform will be determined by one outcome: making the process of losing something less stressful and dramatically increasing the chances of getting it back.
 
 
