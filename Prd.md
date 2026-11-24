@@ -1,41 +1,465 @@
-PRD: Lost & Found Platform 
-1. The Problem We're Solving
-Losing something important your wallet, keys, laptop, or ID is stressful enough. Trying to get it back shouldn't make it worse.
-Right now, most lost-and-found setups are broken on both sides:
-• For the person who lost something: You have no idea where to look. You end up calling three different reception desks, scrolling through messy community group chats, and describing your black backpack to five different .
-• For the staff and finders: Logging items in a paper binder or a basic spreadsheet takes too long, descriptions are vague and nobody knows where the item is and the front desk staff spend a lot of time answering calls from people with lost items.
+Product Requirements Document (PRD)
+Lost & Found Platform
+1. Executive Summary
 
-The goal is to build a simple, central place where anyone can log a found item in under a minute, and owners can search, prove an item is theirs, and pick it up without the usual runaround.
-2. Who We're Building This For
-• The Seeker : Anxious, in a hurry, and probably checking their phone while retracing their steps. They want to know immediately if their stuff has been found, or set an alert so they don't have to keep refreshing a page.
-• The Finder: Someone who picked up a dropped phone or wallet and wants to do the right thing as long as it doesn't take ten minutes or force them to create an account and verify an email.
-• The Admin : Receptionists, security guards, or operations staff managing the physical storage room. They need to log drop offs fast, keep shelves organized, and make sure they don't accidentally hand a lost item to the wrong person.
-3. How It Should Work 
-Logging a Found Item 
-If reporting a found item feels to stressful or tedious  people won't use it.
-• No-Account Guest Reporting: A Finder should be able to scan a QR code on a poster (or open the web app), snap a photo, pick a category, and hit submit. No password required.
-• Smart Photo Intake: Photos are mandatory for found items a picture saves a thousand words. When a photo is uploaded, the system should suggest basic tags (e.g., Electronics, Black, Headphones) so the user just taps to confirm instead of typing.
-• Auto-Blurring Sensitive Info: If someone finds a driver's license, passport, or credit card, we cannot blast their home address or card number on a public feed. The system should flag IDs/cards and automatically blur sensitive text before the listing goes live.
-• Location Pinning: A quick dropdown of common buildings/zones plus an optional map pin so owners know where it turned up.
-B. Searching & Smart Matching
-• Clean Public Catalog: Seekers can browse found items with simple filters: What is it?  When did you lose it? , Where? , and What color?
-• Lost Item Alerts: If the item isn't in the system yet, the Seeker can post a quick "Lost" report. Behind the scenes, our matching engine watches incoming "Found" reports. The second something matches the category, keywords, and timeframe, the Seeker gets an email or SMS nudge: "Hey, someone just turned in a silver ring near the library take a look."
-• Clear Status Tracking: Nobody likes being left in the dark. Every item moves through clear stages visible to the people involved: Reported \rightarrow At Front Desk \rightarrow Claim Under Review \rightarrow Ready for Pickup \rightarrow Returned.
-C. Proving Ownership & Handoff
-This is the trickiest part: showing enough info so the real owner recognizes their stuff, while holding back enough detail so scammers can't claim freebies.
-• The "Secret Detail" Gate: When someone clicks "This is mine," they have to answer a prompt before the claim goes through. Finders or staff can set a custom question (e.g., "What's the lock screen photo?" or "What's inside the front pocket?"), or the Seeker has to provide unique proof like a serial number or distinctive scratch.
-• One-Time Pickup Pass: Once staff approve a claim, the Seeker gets a unique QR code or 4-digit PIN. When they show up at the desk, staff scan/enter the code, check a photo ID if it's a high-value item, and close out the ticket.
-D. Back-Office Storage Management (For Staff)
-• Bin & Shelf Tracking: When an item is handed over to staff, the system generates a unique Item ID  Staff can print a small sticker label or just write  a tag and assign it to Shelf B, Bin 3. No more digging through three boxes of umbrellas while an owner waits at the counter.
-• Expiration & Cleanup Rules: Storage closets fill up fast. Staff can set retention rules (e.g., 30 days for low-value items, 90 days for electronics). The dashboard flags expired items so staff know what can be donated, recycled, or cleared out.
+Losing personal belongings is a frustrating and emotionally stressful experience. Whether it's a wallet, smartphone, laptop, keys, identification card, or sentimental possession, the process of recovering lost items is often fragmented, time-consuming, and inefficient.
 
-5. Edge Cases & Real-World Messiness
-• High-Value vs. Everyday Stuff: A laptop needs stricter checks than an  umbrella. Admins should be able to mark certain categories as "High Value," which forces an in-person government ID check at pickup.
-• Items Found by people  Hold of Them: Sometimes a Finder logs an item ("Found a black lab mix" or "Found keys on somewhere and holds onto it instead of dropping it at a central desk. We should support a "Held by Finder" handoff option with in-app messaging (masking phone numbers) so they can coordinate a safe public meetup.
-• Duplicate Reports: Three people might report the same unattended backpack. Staff need a quick way to merge duplicate listings into one active record.
-• Spam & Bogus Claims: If an account submits three rejected claims in a row, flag or temporarily lock their claiming privileges so bad actors can't guess answers repeatedly.
-6. How We'll Know It's Working (Metrics)
-• Return Rate: What percentage of logged found items actually make it back to their owners? (Our north star metric).
-• Intake Speed: Average time from opening the "Report Found Item" screen to hitting submit. Target: under 60 seconds.
-• Resolution Time: Median time from an item being logged to being marked Returned.
-• Staff Time Saved: Reduction in manual phone/email inquiries handled by front-desk staff.
+Most lost-and-found systems today operate through paper registers, spreadsheets, email threads, social media posts, reception desks, or word of mouth. As a result, owners struggle to locate their belongings while staff spend excessive time manually managing inquiries.
+
+The Lost & Found Platform provides a centralized digital solution that allows people to quickly report found items, enables owners to search and claim lost property, and gives organizations the tools they need to manage storage, verification, and item returns efficiently.
+
+The platform is designed around three principles:
+
+Fast reporting
+Safe ownership verification
+Transparent tracking from discovery to return
+
+The ultimate goal is to maximize return rates while minimizing effort for finders, seekers, and staff.
+
+2. Problem Statement
+
+Current lost-and-found systems create friction for every participant involved.
+
+For People Who Lost Items
+Unsure where to search
+Forced to contact multiple locations individually
+Reliant on informal channels
+No visibility into recovery progress
+Significant emotional frustration
+For People Who Find Items
+Reporting is inconvenient
+Often requires account creation
+Little incentive to participate
+Unclear what happens after submission
+For Staff and Administrators
+Manual record keeping
+High volume of repetitive inquiries
+Poor inventory organization
+Limited tracking and accountability
+Increased risk of property being released incorrectly
+
+This leads to low recovery rates, wasted administrative effort, and poor user experiences.
+
+3. Vision & Product Goals
+Product Vision
+
+To become the most trusted and frictionless system for connecting lost property with its rightful owner.
+
+Primary Goals
+Enable found items to be logged in under 60 seconds.
+Increase lost-item return rates.
+Reduce manual administrative effort.
+Improve transparency throughout the recovery journey.
+Prevent fraudulent claims.
+Success Principles
+Simplicity first
+Mobile-first experience
+High trust and security
+Minimal barriers to participation
+Clear audit trail for every item
+4. Target Users & Personas
+Persona 1: The Seeker
+
+Profile
+
+Someone who recently lost an item.
+
+Goals
+
+Determine whether their item has been found
+Receive updates automatically
+Recover belongings quickly
+
+Pain Points
+
+Anxiety and urgency
+Uncertainty about where to check
+Having to repeat descriptions multiple times
+Persona 2: The Finder
+
+Profile
+
+Someone who discovers a lost item and wants to help.
+
+Goals
+
+Report the item quickly
+Avoid complicated registration
+Ensure the item gets returned
+
+Pain Points
+
+Time-consuming reporting processes
+Lack of trust in existing systems
+Persona 3: The Administrator
+
+Profile
+
+Front desk staff, security personnel, property managers, facility administrators.
+
+Goals
+
+Manage inventory efficiently
+Verify ownership safely
+Maintain accurate records
+
+Pain Points
+
+Constant interruptions
+Difficult storage management
+Risk of human error
+5. User Journey
+Found Item Flow
+Finder discovers item.
+Finder scans QR code or opens application.
+Finder uploads photo.
+AI generates suggested tags.
+Finder confirms category/location.
+Item enters platform.
+Admin receives notification.
+Lost Item Flow
+Seeker searches inventory.
+If no match exists, seeker files lost report.
+Matching engine monitors new found reports.
+Potential match triggers notification.
+Seeker submits ownership claim.
+Verification process begins.
+Pickup appointment completed.
+6. Functional Requirements
+A. Found Item Reporting
+Guest Submission
+
+Users may report found items without creating accounts.
+
+Required fields:
+
+Photo
+Category
+Location
+Date found
+
+Optional fields:
+
+Notes
+Exact GPS location
+Smart Image Classification
+
+System should automatically suggest:
+
+Item type
+Color
+Brand (when detectable)
+Relevant keywords
+
+Example:
+
+Photo → Black Bose headphones
+
+Suggested tags:
+
+Electronics
+Black
+Headphones
+Bose
+Privacy Protection
+
+Sensitive personal information must be automatically obscured:
+
+Driver's licenses
+Passports
+Employee IDs
+Credit cards
+
+Detected information should be blurred before publication.
+
+B. Search & Discovery
+
+Users should be able to filter by:
+
+Category
+Date
+Location
+Color
+Brand
+Status
+
+Search should support fuzzy matching and keyword variations.
+
+Example:
+
+"AirPods" should also return:
+
+Earbuds
+Wireless headphones
+C. Lost Reports
+
+Users should be able to create lost item records.
+
+Required details:
+
+Item type
+Last known location
+Approximate date
+Distinguishing characteristics
+D. Matching Engine
+
+The system should continuously compare:
+
+Lost Reports ↔ Found Reports
+
+Matching signals include:
+
+Category
+Keywords
+Color
+Brand
+Time range
+Location proximity
+
+Potential matches generate alerts.
+
+E. Claim Management
+
+Users can select:
+
+"This Is Mine"
+
+Claims enter review status.
+
+Ownership proof may include:
+
+Serial numbers
+Unique markings
+Secret questions
+Purchase receipt
+Device lock screen description
+F. Pickup Authorization
+
+Approved claimants receive:
+
+QR Pass or
+4-digit pickup code
+
+Staff use validation screen to confirm retrieval.
+
+Once completed:
+
+Status → Returned
+
+G. Storage Management
+
+Every physical item receives:
+
+Item ID
+Storage Location
+Shelf Assignment
+Bin Assignment
+
+Example:
+
+ITEM-2847
+
+Location:
+
+Shelf B → Bin 3
+
+7. Non-Functional Requirements
+Performance
+Search results < 2 seconds
+Report submission < 5 seconds
+Notifications < 1 minute
+Availability
+99.9% uptime target
+Scalability
+
+System should support:
+
+Multi-building campuses
+Airports
+Universities
+Shopping malls
+Event venues
+Accessibility
+
+Comply with WCAG 2.1 AA standards.
+
+Mobile Responsiveness
+
+Full functionality on:
+
+iOS
+Android
+Tablet
+Desktop
+8. Security & Privacy Requirements
+Data Protection
+
+Sensitive information must never appear publicly.
+
+Authentication
+
+Admin accounts require:
+
+Email login
+Multi-factor authentication (MFA)
+Authorization
+
+Role-based permissions:
+
+Role	Permissions
+Finder	Submit reports
+Seeker	Search & claim
+Staff	Verify & manage items
+Admin	System management
+Audit Logging
+
+The platform must record:
+
+Item creation
+Claim submissions
+Approvals
+Pickups
+Status changes
+9. System Architecture & Integrations
+Core Components
+Frontend
+Web application
+Mobile responsive UI
+Backend
+REST API
+Matching engine
+Notification service
+Database
+
+Stores:
+
+Users
+Found items
+Lost reports
+Claims
+Audit logs
+Third-Party Integrations
+Notification Providers
+Twilio (SMS)
+SendGrid (Email)
+AI Services
+Image recognition
+Object classification
+OCR detection
+Sensitive data redaction
+QR Services
+QR generation
+QR validation
+10. Edge Cases, Risks & Mitigations
+Duplicate Reports
+
+Problem:
+
+Multiple people report the same item.
+
+Solution:
+
+Duplicate detection
+Merge workflow
+Staff review queue
+Fraudulent Claims
+
+Problem:
+
+Users guess answers until successful.
+
+Solution:
+
+Claim attempt tracking
+Rate limiting
+Temporary suspension after multiple failures
+Finder Keeps Item
+
+Problem:
+
+Finder prefers not to hand over the item immediately.
+
+Solution:
+
+"Held By Finder" workflow.
+
+Features:
+
+Anonymous messaging
+Safe meetup recommendations
+Claim verification before handoff
+High-Value Assets
+
+Examples:
+
+Laptops
+Tablets
+Expensive jewelry
+Cameras
+
+Additional requirements:
+
+Government-issued ID verification
+Staff approval mandatory
+Pickup audit record
+False Reports
+
+Solution:
+
+Spam detection
+Image validation
+Admin moderation tools
+11. Success Metrics & Future Roadmap
+North Star Metric
+Return Rate
+
+Percentage of found items successfully returned to their rightful owners.
+
+Target:
+
+70%+ item return rate within first year.
+
+Supporting Metrics
+Intake Speed
+
+Target:
+
+< 60 seconds
+
+Claim Approval Time
+
+Target:
+
+< 24 hours
+
+Resolution Time
+
+Target:
+
+Median recovery time of less than 7 days.
+
+Staff Efficiency
+
+Target:
+
+Reduce manual inquiries by 50%.
+
+Future Roadmap
+Phase 2
+Native iOS application
+Native Android application
+Push notifications
+Calendar pickup scheduling
+Phase 3
+AI-powered image-only search
+Multilingual support
+Public community lost-and-found network
+Cross-organization item sharing
+Phase 4
+Airport and university partnerships
+Smart locker integrations
+Self-service pickup kiosks
+Predictive recovery analytics
+Product Statement
+
+The Lost & Found Platform transforms a traditionally fragmented and frustrating process into a trusted, efficient, and transparent experience. By combining AI-assisted reporting, intelligent matching, secure ownership verification, and operational tools for staff, the platform makes returning lost property faster, safer, and significantly more scalable than existing manual systems.
